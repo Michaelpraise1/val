@@ -5,39 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yes</title>
   <style>
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotateZ(360deg);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(-10px);
+      }
+      50% {
+        transform: translateY(10px);
+      }
+    }
+    
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
     body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f9e3e3;
-    font-family: 'Arial', sans-serif;
-}
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #f9e3e3 0%, #ffcccc 100%);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      font-size: 30px;
+      animation: confetti-fall 3s linear forwards;
+    }
 
-.container {
-    text-align: center;
-}
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.98);
+      padding: 50px;
+      border-radius: 30px;
+      box-shadow: 0 15px 50px rgba(211, 47, 47, 0.3);
+      animation: float 2s ease-in-out infinite;
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+    }
 
-.header_text {
-    font-size: 3em;
-    color: #d32f2f;
-}
+    .header_text {
+      font-size: 3em;
+      color: #d32f2f;
+      margin: 0 0 20px 0;
+      text-shadow: 2px 2px 4px rgba(211, 47, 47, 0.1);
+      animation: spin 4s linear infinite;
+      display: inline-block;
+    }
 
-.gif_container img {
-    width: 100%; 
-    max-width: 500px; 
-    height: auto; 
-}
+    .gif_container img {
+      width: 100%; 
+      max-width: 500px; 
+      height: auto;
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 8px 25px rgba(211, 47, 47, 0.2);
+    }
+    
+    .heart-emoji {
+      display: inline-block;
+      animation: pulse 0.6s ease-in-out infinite;
+      margin: 0 5px;
+    }
 
   </style>
 </head>
 <body>
   <div class="container">
-        <h1 class="header_text">Knew you would say yes! Thank you my baby boo!!!</h1>
+        <h1 class="header_text"><span class="heart-emoji">❤️</span>Knew you would say yes!<span class="heart-emoji">❤️</span></h1>
+        <p style="font-size: 1.5em; color: #d32f2f; margin: 15px 0;">Thank you my baby boo!!!</p>
         <div class="gif_container">
             <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
         </div>
     </div>
+  <script>
+    function createConfetti() {
+      const confettiPieces = ['🎉', '💕', '✨', '🎊', '💖', '🌟', '💝'];
+      for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.textContent = confettiPieces[Math.floor(Math.random() * confettiPieces.length)];
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+          confetti.style.animationDelay = Math.random() * 0.5 + 's';
+          document.body.appendChild(confetti);
+        }, i * 30);
+      }
+    }
+    
+    createConfetti();
+    setInterval(createConfetti, 4000);
+  </script>
 </body>
 </html>

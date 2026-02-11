@@ -5,49 +5,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valantine</title>
 <style>
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  @keyframes heart-fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
   body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f9e3e3;
+    background: linear-gradient(135deg, #f9e3e3 0%, #ffcccc 100%);
     font-family: 'Arial', sans-serif;
     flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .hearts-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .heart {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.6;
+    animation: heart-fall linear infinite;
   }
   
   .container {
     text-align: center;
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
+    animation: float 3s ease-in-out infinite;
   }
   
   h1 {
     font-size: 2.5em;
     color: #d32f2f;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(211, 47, 47, 0.1);
   }
   
   .buttons {
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
   }
   
   .yes-button {
     font-size: 1.5em;
-    padding: 10px 20px;
-    margin-right: 10px;
-    background-color: #4caf50;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4caf50, #45a049);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  }
+  
+  .yes-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+  }
+  
+  .yes-button:active {
+    transform: scale(0.98);
   }
   
   .no-button {
     font-size: 1.5em;
-    padding: 10px 20px;
-    background-color: #f44336;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #f44336, #da190b);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+  }
+  
+  .no-button:hover {
+    transform: translateX(10px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.5);
   }
   
   .gif_container img {
@@ -55,10 +130,16 @@
     height: auto;
     border-radius: 10px;
     margin-top: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .gif_container img:hover {
+    transform: scale(1.05);
   }
 </style>
 </head>
 <body>
+   <div class="hearts-background" id="heartsBackground"></div>
    <div class="container">
         <h1>Hello Azenebor Stephanie,<br/> Will you do the honor to be my Valentine?</h1>
         <div class="buttons">
